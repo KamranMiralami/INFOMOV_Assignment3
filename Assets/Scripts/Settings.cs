@@ -15,6 +15,8 @@ public class Settings : MonoBehaviour
 	public bool useECSforEnemies = true;
 	public float enemySpawnRadius = 17f;
 
+	public bool useExtraOptimizations = true;
+
 	[Range(1, 100)] public int enemySpawnsPerInterval = 1;
 	[Range(.1f, 2f)] public float enemySpawnInterval = 1f;
 	

@@ -26,11 +26,11 @@ partial struct CollisionSystem : ISystem
 		enemyCollisionRadius = Settings.EnemyCollisionRadius;
 		playerCollisionRadius = Settings.PlayerCollisionRadius;
 	}
-
-	[BurstCompile]
 	public void OnUpdate(ref SystemState state)
 	{
-		var jobEvB = new CollisionJob()
+		var useExtraOptimizations = Settings.Instance.useExtraOptimizations;
+        //TODO : add simd branch 
+        var jobEvB = new CollisionJob()
 		{
 			radius = enemyCollisionRadius * enemyCollisionRadius,
 			transToTestAgainst = bulletQuery.ToComponentDataArray<LocalTransform>(Allocator.TempJob)

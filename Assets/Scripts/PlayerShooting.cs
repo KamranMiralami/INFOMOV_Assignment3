@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerShooting : MonoBehaviour
 {
@@ -14,7 +15,6 @@ public class PlayerShooting : MonoBehaviour
             return;
 		
         timer += Time.deltaTime;
-
         if (Input.GetButton("Fire1") && timer >= Settings.Instance.fireRate)
         {
             Vector3 rotation = gunBarrel.rotation.eulerAngles;

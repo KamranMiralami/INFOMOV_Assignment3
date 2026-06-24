@@ -33,9 +33,7 @@ partial struct SpawnBulletSystem : ISystem
         Entity bulletEntityPrefab = directory.bulletPrefab;
         EntityManager manager = state.EntityManager;
         
-        if (Settings.Instance.useECSforBullets && 
-            Input.GetButton("Fire1") && 
-            timer >= Settings.Instance.fireRate)
+        if (Settings.Instance.useECSforBullets && Input.GetButton("Fire1") && timer >= Settings.Instance.fireRate)
         {
             Vector3 rotation = Settings.PlayerGunBarrelRotationEuler;
             rotation.x = 0f;

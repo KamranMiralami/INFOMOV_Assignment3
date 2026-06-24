@@ -51,6 +51,7 @@ MonoBehaviour:
   spawnEnemies: 1
   useECSforEnemies: 1
   enemySpawnRadius: 17
+  useExtraOptimizations: 0
   enemySpawnsPerInterval: 1
   enemySpawnInterval: 1
   player: {fileID: 0}
