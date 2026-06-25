@@ -13,8 +13,8 @@ partial struct CollisionSystem : ISystem
 	EntityQuery enemyQuery;
 	EntityQuery bulletQuery;
 	EntityQuery playerQuery;
-	float enemyCollisionRadius;
-	float playerCollisionRadius;
+	float enemyCollisionRadiusSqr;
+	float playerCollisionRadiusSqr;
 
 	[BurstCompile]
 	public void OnCreate(ref SystemState state)
@@ -23,8 +23,8 @@ partial struct CollisionSystem : ISystem
 		enemyQuery = SystemAPI.QueryBuilder().WithAll<Health, EnemyTag, LocalTransform>().Build();
 		bulletQuery = SystemAPI.QueryBuilder().WithAll<TimeToLive, LocalTransform>().Build();
 		playerQuery = SystemAPI.QueryBuilder().WithAll<Health, PlayerTag, LocalTransform>().Build();
-		enemyCollisionRadius = Settings.EnemyCollisionRadius;
-		playerCollisionRadius = Settings.PlayerCollisionRadius;
+		enemyCollisionRadiusSqr = Settings.EnemyCollisionRadius * Settings.EnemyCollisionRadius;
+		playerCollisionRadiusSqr = Settings.PlayerCollisionRadius * Settings.PlayerCollisionRadius;
 	}
 	public void OnUpdate(ref SystemState state)
 	{
@@ -32,14 +32,15 @@ partial struct CollisionSystem : ISystem
         //TODO : add simd branch 
         var jobEvB = new CollisionJob()
 		{
-			radius = enemyCollisionRadius * enemyCollisionRadius,
-			transToTestAgainst = bulletQuery.ToComponentDataArray<LocalTransform>(Allocator.TempJob)
+			radiusSqr = enemyCollisionRadiusSqr,
+			transToTestAgainst = bulletQuery.ToComponentDataArray<LocalTransform>(state.WorldUpdateAllocator)
+			
 		};
 		state.Dependency = jobEvB.ScheduleParallel(enemyQuery, state.Dependency);
 		var jobPvE = new CollisionJob()
 		{
-			radius = playerCollisionRadius * playerCollisionRadius,
-			transToTestAgainst = enemyQuery.ToComponentDataArray<LocalTransform>(Allocator.TempJob)
+			radiusSqr = playerCollisionRadiusSqr,
+			transToTestAgainst = enemyQuery.ToComponentDataArray<LocalTransform>(state.WorldUpdateAllocator)
 		};
 		state.Dependency = jobPvE.ScheduleParallel(playerQuery, state.Dependency);
 	}
@@ -48,15 +49,14 @@ partial struct CollisionSystem : ISystem
 [BurstCompile]
 partial struct CollisionJob : IJobEntity 
 {
-	public float radius;
-	[DeallocateOnJobCompletion]
+	public float radiusSqr;
 	[ReadOnly] public NativeArray<LocalTransform> transToTestAgainst;
 	public void Execute(ref Health health, in LocalTransform transform)
 	{
 		float damage = 0f;
 		for (int i = 0; i < transToTestAgainst.Length; i++)
 		{
-			if (CheckCollision(transform.Position, transToTestAgainst[i].Position, radius))
+			if (CheckCollision(transform.Position, transToTestAgainst[i].Position, radiusSqr))
 				damage += 1;
 		}
 		if (damage > 0)
