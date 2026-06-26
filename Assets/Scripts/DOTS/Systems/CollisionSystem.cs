@@ -6,7 +6,7 @@ using Unity.Mathematics;
 using Unity.Transforms;
 
 
-[BurstCompile]
+[BurstCompile(FloatPrecision = FloatPrecision.Medium, FloatMode = FloatMode.Fast)]
 [UpdateAfter(typeof(TurnTowardsPlayerSystem))]
 partial struct CollisionSystem : ISystem
 {
@@ -16,7 +16,7 @@ partial struct CollisionSystem : ISystem
 	float enemyCollisionRadiusSqr;
 	float playerCollisionRadiusSqr;
 
-	[BurstCompile]
+	[BurstCompile(FloatPrecision = FloatPrecision.Medium, FloatMode = FloatMode.Fast)]
 	public void OnCreate(ref SystemState state)
 	{
 		state.RequireForUpdate<EnemyTag>(); 
@@ -46,7 +46,7 @@ partial struct CollisionSystem : ISystem
 	}
 }
 
-[BurstCompile]
+[BurstCompile(FloatPrecision = FloatPrecision.Medium, FloatMode = FloatMode.Fast)]
 partial struct CollisionJob : IJobEntity 
 {
 	public float radiusSqr;

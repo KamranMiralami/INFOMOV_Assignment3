@@ -4,7 +4,7 @@ using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
 
-[BurstCompile]
+[BurstCompile(FloatPrecision = FloatPrecision.Medium, FloatMode = FloatMode.Fast)]
 [UpdateBefore(typeof(MoveForwardSystem))] 
 partial struct TurnTowardsPlayerSystem : ISystem
 {
@@ -25,7 +25,7 @@ partial struct TurnTowardsPlayerSystem : ISystem
 	}
 }
 
-[BurstCompile]
+[BurstCompile(FloatPrecision = FloatPrecision.Medium, FloatMode = FloatMode.Fast)]
 [WithAll(typeof(EnemyTag))]
 public partial struct TurnTowardTargetJob : IJobEntity
 {

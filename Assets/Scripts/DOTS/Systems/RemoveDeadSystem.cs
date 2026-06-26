@@ -2,17 +2,17 @@
 using Unity.Entities;
 using Unity.Collections;
 
-[BurstCompile]
+[BurstCompile(FloatPrecision = FloatPrecision.Medium, FloatMode = FloatMode.Fast)]
 partial struct RemoveDeadSystem : ISystem
 {
-	[BurstCompile]
+	[BurstCompile(FloatPrecision = FloatPrecision.Medium, FloatMode = FloatMode.Fast)]
 	public void OnCreate(ref SystemState state)
 	{
 		state.RequireForUpdate<Health>();
 		state.RequireForUpdate<EndSimulationEntityCommandBufferSystem.Singleton>();
 	}
 
-	[BurstCompile]
+	[BurstCompile(FloatPrecision = FloatPrecision.Medium, FloatMode = FloatMode.Fast)]
 	public void OnUpdate(ref SystemState state)
 	{
 		var ecbSingleton = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>();
@@ -27,7 +27,7 @@ partial struct RemoveDeadSystem : ISystem
 	}
 }
 
-[BurstCompile]
+[BurstCompile(FloatPrecision = FloatPrecision.Medium, FloatMode = FloatMode.Fast)]
 [WithAll(typeof(EnemyTag))]
 partial struct RemoveDeadJob : IJobEntity
 {

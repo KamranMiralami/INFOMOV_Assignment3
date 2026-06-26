@@ -4,11 +4,11 @@ using Unity.Entities;
 using UnityEngine;
 
 
-[BurstCompile]
+[BurstCompile(FloatPrecision = FloatPrecision.Medium, FloatMode = FloatMode.Fast)]
 [RequireMatchingQueriesForUpdate]
 public partial struct TimedDestroySystem : ISystem
 { 
-	[BurstCompile]
+	[BurstCompile(FloatPrecision = FloatPrecision.Medium, FloatMode = FloatMode.Fast)]
 	public void OnUpdate(ref SystemState state)
 	{
 		using (var commandBuffer = new EntityCommandBuffer(Allocator.TempJob))

@@ -4,16 +4,16 @@ using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
 
-[BurstCompile]
+[BurstCompile(FloatPrecision = FloatPrecision.Medium, FloatMode = FloatMode.Fast)]
 partial struct MoveForwardSystem : ISystem
 {
-    [BurstCompile]
+    [BurstCompile(FloatPrecision = FloatPrecision.Medium, FloatMode = FloatMode.Fast)]
     public void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<MoveSpeed>();
     }
 
-    [BurstCompile]
+    [BurstCompile(FloatPrecision = FloatPrecision.Medium, FloatMode = FloatMode.Fast)]
     public void OnUpdate(ref SystemState state)
     {
         var MoveForwardJob = new MoveForwardJob
@@ -24,7 +24,7 @@ partial struct MoveForwardSystem : ISystem
     }
 }
 
-[BurstCompile]
+[BurstCompile(FloatPrecision = FloatPrecision.Medium, FloatMode = FloatMode.Fast)]
 [WithAll(typeof(MoveForward))]
 public partial struct MoveForwardJob : IJobEntity
 {

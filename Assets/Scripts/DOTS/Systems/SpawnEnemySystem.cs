@@ -50,7 +50,7 @@ partial struct SpawnEnemySystem : ISystem
         }
     }
     
-    [BurstCompile]
+    [BurstCompile(FloatPrecision = FloatPrecision.Medium, FloatMode = FloatMode.Fast)]
     void SpawnEnemy(
         ref EntityManager manager,
         Entity enemyPrefab, 

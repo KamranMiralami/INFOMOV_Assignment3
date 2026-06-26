@@ -58,7 +58,7 @@ partial struct SpawnBulletSystem : ISystem
             timer = 0f;
         }
     }
-    [BurstCompile]
+    [BurstCompile(FloatPrecision = FloatPrecision.Medium, FloatMode = FloatMode.Fast)]
     private void SpawnBullet(
         ref EntityManager manager,
         Entity bulletEntityPrefab, 
@@ -75,7 +75,7 @@ partial struct SpawnBulletSystem : ISystem
         manager.SetComponentData(bullet, t);
     }
     
-    [BurstCompile]
+    [BurstCompile(FloatPrecision = FloatPrecision.Medium, FloatMode = FloatMode.Fast)]
     private void SpawnBulletSpread(
         ref EntityManager manager, 
         Entity bulletEntityPrefab,
