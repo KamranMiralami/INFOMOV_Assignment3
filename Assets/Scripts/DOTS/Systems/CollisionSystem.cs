@@ -54,19 +54,17 @@ partial struct CollisionJob : IJobEntity
 	public void Execute(ref Health health, in LocalTransform transform)
 	{
 		float damage = 0f;
+		
+		float3 posA = transform.Position;
 		for (int i = 0; i < transToTestAgainst.Length; i++)
 		{
-			if (CheckCollision(transform.Position, transToTestAgainst[i].Position, radiusSqr))
-				damage += 1;
+			float3 posB = transToTestAgainst[i].Position;
+			
+			float distanceSquare = math.distancesq(posA.xz, posB.xz);
+			
+			damage += math.select(0f, 1f, distanceSquare <= radiusSqr);
 		}
 		if (damage > 0)
 			health.Value -= damage;
-	}
-	bool CheckCollision(float3 posA, float3 posB, float radiusSqr)
-	{
-		float3 delta = posA - posB;
-		float distanceSquare = delta.x * delta.x + delta.z * delta.z;
-
-		return distanceSquare <= radiusSqr;
 	}
 }
