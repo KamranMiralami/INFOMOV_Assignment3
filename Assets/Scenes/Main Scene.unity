@@ -485,7 +485,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FPSCounter
   fpsText: {fileID: 109476028}
-  updateRate: 0.05
+  updateRate: 0.2
 --- !u!222 &109476030
 CanvasRenderer:
   m_ObjectHideFlags: 0
