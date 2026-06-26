@@ -26,10 +26,9 @@ partial struct CollisionSystem : ISystem
 		enemyCollisionRadiusSqr = Settings.EnemyCollisionRadius * Settings.EnemyCollisionRadius;
 		playerCollisionRadiusSqr = Settings.PlayerCollisionRadius * Settings.PlayerCollisionRadius;
 	}
-	public void OnUpdate(ref SystemState state)
+    [BurstCompile(FloatPrecision = FloatPrecision.Medium, FloatMode = FloatMode.Fast)]
+    public void OnUpdate(ref SystemState state)
 	{
-		var useExtraOptimizations = Settings.Instance.useExtraOptimizations;
-        //TODO : add simd branch 
         var jobEvB = new CollisionJob()
 		{
 			radiusSqr = enemyCollisionRadiusSqr,

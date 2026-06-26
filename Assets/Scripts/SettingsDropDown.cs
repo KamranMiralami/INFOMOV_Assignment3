@@ -46,9 +46,6 @@ public class SettingsDropDown : MonoBehaviour
             case 1:
                 MakeECSOnly();
                 break;
-            case 2:
-                MakeECSPlus();
-                break;
             default:
                 Debug.LogWarning("Invalid setting value: " + value);
                 break;
@@ -58,19 +55,11 @@ public class SettingsDropDown : MonoBehaviour
     {
         Settings.Instance.useECSforBullets = false;
         Settings.Instance.useECSforEnemies = false;
-        Settings.Instance.useExtraOptimizations = false;
     }
     void MakeECSOnly()
     {
         Settings.Instance.useECSforBullets = true;
         Settings.Instance.useECSforEnemies = true;
-        Settings.Instance.useExtraOptimizations = false;
-    }
-    void MakeECSPlus()
-    {
-        Settings.Instance.useECSforBullets = true;
-        Settings.Instance.useECSforEnemies = true;
-        Settings.Instance.useExtraOptimizations = true;
     }
     private void QuitGame()
     {
